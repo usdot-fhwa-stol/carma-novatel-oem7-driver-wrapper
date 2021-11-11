@@ -12,14 +12,14 @@
 #  License for the specific language governing permissions and limitations under
 #  the License.
 
-FROM usdotfhwastoldev/autoware.ai:develop as setup
+FROM usdotfhwastoldev/autoware.ai:noetic-develop as setup
 
 RUN mkdir ~/src
 COPY --chown=carma . /home/carma/src/
 RUN ~/src/docker/checkout.bash
 RUN ~/src/docker/install.sh
 
-FROM usdotfhwastoldev/autoware.ai:develop
+FROM usdotfhwastoldev/autoware.ai:noetic-develop
 
 ARG BUILD_DATE="NULL"
 ARG VERSION="NULL"
@@ -27,7 +27,7 @@ ARG VCS_REF="NULL"
 
 LABEL org.label-schema.schema-version="1.0"
 LABEL org.label-schema.name="carma-novatel-gps-driver-wrapper"
-LABEL org.label-schema.description="carma Velodyne Lidar driver for the CARMA Platform"
+LABEL org.label-schema.description="carma novatel driver wrapper for the CARMA Platform"
 LABEL org.label-schema.vendor="Leidos"
 LABEL org.label-schema.version=${VERSION}
 LABEL org.label-schema.url="https://highways.dot.gov/research/research-programs/operations/CARMA"
