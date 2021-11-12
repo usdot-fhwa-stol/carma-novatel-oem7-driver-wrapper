@@ -14,6 +14,9 @@
 #  License for the specific language governing permissions and limitations under
 #  the License.
 
-source /opt/autoware.ai/ros/install/setup.bash
+# Source Environment variables
+source /home/carma/.base-image/init-env.sh
+
+# Enter source directory
 cd ~/
 colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release

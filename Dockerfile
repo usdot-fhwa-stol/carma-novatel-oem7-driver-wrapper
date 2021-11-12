@@ -12,14 +12,17 @@
 #  License for the specific language governing permissions and limitations under
 #  the License.
 
-FROM usdotfhwastoldev/autoware.ai:noetic-develop as setup
+FROM usdotfhwastoldev/carma-base:noetic-develop as base_image
+
+FROM base_image as build
 
 RUN mkdir ~/src
 COPY --chown=carma . /home/carma/src/
 RUN ~/src/docker/checkout.bash
 RUN ~/src/docker/install.sh
 
-FROM usdotfhwastoldev/autoware.ai:noetic-develop
+
+FROM base_image
 
 ARG BUILD_DATE="NULL"
 ARG VERSION="NULL"
@@ -35,6 +38,6 @@ LABEL org.label-schema.vcs-url="https://github.com/usdot-fhwa-stol/carma-novatel
 LABEL org.label-schema.vcs-ref=${VCS_REF}
 LABEL org.label-schema.build-date=${BUILD_DATE}
 
-COPY --from=setup /home/carma/install /opt/carma/install
+COPY --chown=carma --from=build /home/carma/install /opt/carma/install
 
 # CMD [ "wait-for-it.sh", "localhost:11311", "--", "roslaunch", "carma-novatel-gps-driver-wrapper", "carma-novatel-gps-driver-wrapper.launch"]
