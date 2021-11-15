@@ -15,8 +15,11 @@
 #  the License.
 
 # Source Environment variables
-source /home/carma/.base-image/init-env.sh
-
-# Enter source directory
+source /opt/ros/foxy/setup.bash
 cd ~/
-colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
+# Install dependencies
+apt-get update
+rosdep install --from-paths ~/src --ignore-src -r -y
+apt-get install ros-foxy-nmea-msgs
+# Build
+colcon build --symlink-install
