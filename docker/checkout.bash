@@ -24,7 +24,7 @@ while [[ $# -gt 0 ]]; do
       arg="$1"
       case $arg in
             -d|--develop)
-                  BRANCH=develop
+                  BRANCH=foxy/develop
                   shift
             ;;
             -r|--root)
@@ -37,8 +37,8 @@ done
 
 if [[ "$BRANCH" = "foxy/develop" ]]; then
       sudo git clone https://github.com/usdot-fhwa-stol/carma-msgs.git ${dir}/src/CARMAMsgs --branch $BRANCH
-      sudo git clone https://github.com/novatel/novatel_oem7_driver.git --branch ros2-dev
+      sudo git clone https://github.com/novatel/novatel_oem7_driver.git --branch ros2-dev 3055e22
 else
       sudo git clone https://github.com/usdot-fhwa-stol/carma-msgs.git ${dir}/src/CARMAMsgs --branch foxy/develop
-      sudo git clone https://github.com/novatel/novatel_oem7_driver.git --branch ros2-dev
+      sudo git clone https://github.com/novatel/novatel_oem7_driver.git --branch ros2-dev 3055e22
 fi

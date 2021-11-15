@@ -1,6 +1,7 @@
 # carma-novatel-oem7-driver-wrapper
 
-Wrapper repo for NovAtel OEM7 ROS Driver
+Wrapper repo for NovAtel OEM7 ROS Driver (Implementation for ros2)
+https://github.com/novatel/novatel_oem7_driver/tree/ros2-dev 
 
 # CARMAPlatform
 The primary CARMAPlatform repository can be found [here](https://github.com/usdot-fhwa-stol/carma-platform) and is part of the [USDOT FHWA STOL](https://github.com/usdot-fhwa-stol/)
