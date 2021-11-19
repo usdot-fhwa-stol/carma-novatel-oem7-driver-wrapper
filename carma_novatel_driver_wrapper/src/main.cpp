@@ -17,7 +17,6 @@
 #include <memory>
 
 #include "carma_novatel_driver_wrapper/carma_novatel_driver_wrapper.hpp"
-#include "carma_novatel_driver_wrapper/carma_novatel_driver_wrapper_worker.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 int main(int argc, char ** argv)

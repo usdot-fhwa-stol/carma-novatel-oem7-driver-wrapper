@@ -73,9 +73,15 @@ namespace carma_novatel_driver_wrapper
 
     CarmaNovatelDriverWrapperConfig config_;
 
-    protected:
+    //Callbacks
+    void inspvax_callback(const novatel_oem7_msgs::msg::INSPVAX::UniquePtr msg);
+    void imu_callback(const sensor_msgs::msg::Imu::UniquePtr msg);
+    void status_timer_callback(const rclcpp::TimerCallbackType& event);
 
-    rclcpp::Node* node_;
+    rclcpp::Time last_gnss_msg_;
+    rclcpp::Time last_imu_msg_;
+    carma_driver_msgs::msg::DriverStatus status_;
+
   };
 
 } //namespace carma_novatel_driver_wrapper
