@@ -1,0 +1,18 @@
+# Long: Timeout for each service to be detected as available in milliseconds
+# Units: milliseconds
+service_timeout_ms : 200
+
+# Long: Timeout for each service call in milliseconds
+# Units: milliseconds
+call_timeout_ms : 200
+
+# String: The namespace for nodes in this subsystem
+subsystem_namespace: /hardware_interface
+
+# Double: Length of time in which an IMU message cannot be received before it will be considered a fault
+# Units: seconds
+imu_timeout: 0.25
+
+# Double: Length of time in which a GPS message cannot be received before it will be considered a fault
+# Units: seconds
+gnss_timeout: 0.25

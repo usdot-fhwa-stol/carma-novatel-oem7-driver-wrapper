@@ -37,8 +37,20 @@ done
 
 if [[ "$BRANCH" = "foxy/develop" ]]; then
       sudo git clone https://github.com/usdot-fhwa-stol/carma-msgs.git ${dir}/src/CARMAMsgs --branch $BRANCH
-      sudo git clone https://github.com/novatel/novatel_oem7_driver.git --branch ros2-dev 3055e22
+      sudo git clone https://github.com/novatel/novatel_oem7_driver.git --branch ros2-dev 3055e220bb9715b59c3ef53ab0aba05a495d9d5c
+      # Add carma-ros2-utils
+      sudo git clone https://github.com/usdot-fhwa-stol/carma-utils.git --branch foxy-develop
+      # Add gps_umd repo
+      sudo git clone https://github.com/swri-robotics/gps_umd.git -- branch dashing-devel 71bc0335c5d0515fec4683e6d9fa0d785d51007c
+      # Add sensor msgs
+      sudo git clone https://github.com/ros2/common_interfaces.git -- branch foxy 0377ea7b95d98457284d0fbfc01bc53f16ca3332
 else
       sudo git clone https://github.com/usdot-fhwa-stol/carma-msgs.git ${dir}/src/CARMAMsgs --branch foxy/develop
-      sudo git clone https://github.com/novatel/novatel_oem7_driver.git --branch ros2-dev 3055e22
+      sudo git clone https://github.com/novatel/novatel_oem7_driver.git --branch ros2-dev 3055e220bb9715b59c3ef53ab0aba05a495d9d5c
+      # Add carma-ros2-utils
+      sudo git clone https://github.com/usdot-fhwa-stol/carma-utils.git --branch foxy-develop
+      # Add gps_umd repo
+      sudo git clone https://github.com/swri-robotics/gps_umd.git -- branch dashing-devel 71bc0335c5d0515fec4683e6d9fa0d785d51007c
+      # Add sensor msgs
+      sudo git clone https://github.com/ros2/common_interfaces.git -- branch foxy 0377ea7b95d98457284d0fbfc01bc53f16ca3332
 fi
