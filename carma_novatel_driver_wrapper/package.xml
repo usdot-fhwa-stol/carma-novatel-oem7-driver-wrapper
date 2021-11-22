@@ -23,9 +23,8 @@
   <maintainer email="carma@dot.gov">CARMA</maintainer>
   <license>Apache-2.0</license>
 
-  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_auto</buildtool_depend>
 
-  <build_depend>carma_cmake_common</build_depend>
   <depend>carma_ros2_utils</depend>
   <depend>carma_msgs</depend>
   <depend>lifecycle_msgs</depend>
@@ -35,6 +34,7 @@
   <depend>gps_msgs</depend>
   <depend>carma_driver_msgs</depend>
   <depend>novatel_oem7_msgs</depend>
+  <depend> uncertainty_tools</depend>
 
   <export>
     <build_type>ament_cmake</build_type>

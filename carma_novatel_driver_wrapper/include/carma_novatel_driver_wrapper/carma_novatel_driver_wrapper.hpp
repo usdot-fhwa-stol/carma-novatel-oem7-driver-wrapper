@@ -22,7 +22,6 @@
 #include "carma_ros2_utils/carma_lifecycle_node.hpp"
 #include "carma_novatel_driver_wrapper/carma_novatel_driver_wrapper_config.hpp"
 #include "gps_msgs/msg/gps_fix.hpp"
-#include <carma_driver_msgs/msg/driver_status.hpp>
 #include "novatel_oem7_msgs/msg/inspvax.hpp"
 #include "gps_msgs/msg/gps_fix.hpp"
 #include <sensor_msgs/msg/imu.hpp>
@@ -41,11 +40,11 @@ namespace carma_novatel_driver_wrapper
      * 
      * \param options The node options to use for configuring this node
      */
-    explicit CarmaNovatelDriverWrapper(const rclcpp::NodeOptions &options, bool auto_init = true);
+    explicit CarmaNovatelDriverWrapper(const rclcpp::NodeOptions &options);
 
     ~CarmaNovatelDriverWrapper() = default;
 
-    void initialize();
+    void initialize_pub_sub();
     
 
     ////
@@ -61,7 +60,6 @@ namespace carma_novatel_driver_wrapper
 
     //Add Publishers
     std::shared_ptr<rclcpp::Publisher<gps_msgs::msg::GPSFix>> fix_fused_pub_;
-    std::shared_ptr<rclcpp::Publisher<carma_driver_msgs::msg::DriverStatus>> status_pub_;
     std::shared_ptr<rclcpp::Publisher<carma_msgs::msg::SystemAlert>> alert_pub_;
     
     
@@ -76,11 +74,9 @@ namespace carma_novatel_driver_wrapper
     //Callbacks
     void inspvax_callback(const novatel_oem7_msgs::msg::INSPVAX::UniquePtr msg);
     void imu_callback(const sensor_msgs::msg::Imu::UniquePtr msg);
-    void status_timer_callback(const rclcpp::TimerCallbackType& event);
 
     rclcpp::Time last_gnss_msg_;
     rclcpp::Time last_imu_msg_;
-    carma_driver_msgs::msg::DriverStatus status_;
 
   };
 
