@@ -19,7 +19,7 @@
   <name>carma_novatel_driver_wrapper</name>
   <version>0.1.0</version>
   <description>Package containing lifecycle controllers for each carma-platform subsystem</description>
-  <author email="Michael.McConnell-2@leidos.com">Michael McConnell</author>
+  <author email="Anish.Deva@leidos.com">Anish Deva</author>
   <maintainer email="carma@dot.gov">CARMA</maintainer>
   <license>Apache-2.0</license>
 
