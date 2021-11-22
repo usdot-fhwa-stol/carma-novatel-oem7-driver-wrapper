@@ -24,14 +24,20 @@ using std_msec = std::chrono::milliseconds;
 
 namespace carma_novatel_driver_wrapper
 {   
-    CarmaNovatelDriverWrapper::CarmaNovatelDriverWrapper(const rclcpp::NodeOptions &options)
+    CarmaNovatelDriverWrapper::CarmaNovatelDriverWrapper(const rclcpp::NodeOptions &options, bool auto_init)
             : CarmaLifecycleNode(options),
             lifecycle_mgr_(get_node_base_interface(), get_node_graph_interface(), get_node_logging_interface(), get_node_services_interface())
     {
         
+        if (auto_init)
+        {
+            initialize();
+        }
     }
     
     void CarmaNovatelDriverWrapper::initialize(){
+
+        RCLCPP_INFO(get_logger(), "Initializing CarmaNovatelDriverWrapper");
 
         //Add subscribers and publishers
         inspvax_sub_ = create_subscription<novatel_oem7_msgs::msg::INSPVAX>("INSPVAX", 5,

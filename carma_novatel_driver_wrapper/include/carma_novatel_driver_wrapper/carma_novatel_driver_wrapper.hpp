@@ -41,7 +41,7 @@ namespace carma_novatel_driver_wrapper
      * 
      * \param options The node options to use for configuring this node
      */
-    explicit CarmaNovatelDriverWrapper(const rclcpp::NodeOptions &options);
+    explicit CarmaNovatelDriverWrapper(const rclcpp::NodeOptions &options, bool auto_init = true);
 
     ~CarmaNovatelDriverWrapper() = default;
 

@@ -42,11 +42,11 @@ set(dependency_libs
 carma_define_ament_executable(carma_novatel_driver_wrapper_worker "${dependency_libs}" src/main.cpp)
 rclcpp_components_register_nodes(carma_novatel_driver_wrapper "carma_novatel_driver_wrapper")
 
-# if(BUILD_TESTING)
+if(BUILD_TESTING)
 
-#   add_subdirectory(test)
+  add_subdirectory(test)
 
-# endif()
+endif()
 
 install(DIRECTORY config/
   DESTINATION config/

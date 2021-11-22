@@ -28,9 +28,6 @@ int main(int argc, char ** argv)
     rclcpp::executors::MultiThreadedExecutor executor;
     
     executor.add_node(node->get_node_base_interface());
-    node->initialize();
-    
-    
     executor.spin();
 
     rclcpp::shutdown();
