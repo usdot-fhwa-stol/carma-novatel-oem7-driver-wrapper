@@ -43,8 +43,6 @@ namespace carma_novatel_driver_wrapper
     explicit CarmaNovatelDriverWrapper(const rclcpp::NodeOptions &options);
 
     ~CarmaNovatelDriverWrapper() = default;
-
-    void initialize_pub_sub();
     
 
     ////

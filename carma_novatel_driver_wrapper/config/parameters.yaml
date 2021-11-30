@@ -1,11 +1,3 @@
-# Long: Timeout for each service to be detected as available in milliseconds
-# Units: milliseconds
-service_timeout_ms : 200
-
-# Long: Timeout for each service call in milliseconds
-# Units: milliseconds
-call_timeout_ms : 200
-
 # String: The namespace for nodes in this subsystem
 subsystem_namespace: /hardware_interface
 
