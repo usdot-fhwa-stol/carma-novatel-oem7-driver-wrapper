@@ -40,7 +40,7 @@ done
 # novatel driver 
 sudo git clone https://github.com/novatel/novatel_oem7_driver.git --branch ros2-dev 3055e220bb9715b59c3ef53ab0aba05a495d9d5c
 # gps_umd repo for gps_msgs
-sudo git clone https://github.com/swri-robotics/gps_umd.git -- branch dashing-devel 71bc0335c5d0515fec4683e6d9fa0d785d51007c
+sudo git clone https://github.com/swri-robotics/gps_umd.git --branch dashing-devel 71bc0335c5d0515fec4683e6d9fa0d785d51007c
 
 if [[ "$BRANCH" = "foxy/develop" ]]; then
       sudo git clone https://github.com/usdot-fhwa-stol/carma-msgs.git ${dir}/src/CARMAMsgs --branch $BRANCH

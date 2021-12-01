@@ -8,58 +8,22 @@
 
 using std_msec = std::chrono::milliseconds;
 
-TEST(TestCarmaNovatelDriverWrapper, Test_gps_callback){
+TEST(TestCarmaNovatelDriverWrapper, Test_GPScalback){
 
-    auto node = rclcpp::Node::make_shared("test_node");
-    std::string topic = "test_subscription";
-
-    auto publisher = node->create_publisher<novatel_oem7_msgs::msg::INSPVAX>("INSPVAX", 10);
-    novatel_oem7_msgs::msg::INSPVAX inspvax_msg;
-    inspvax_msg.longitude = 34.0;
+    rclcpp::NodeOptions options;
+    auto worker_node = std::make_shared<carma_novatel_driver_wrapper::CarmaNovatelDriverWrapper>(options);
+    worker_node->configure(); //Call configure state transition
+    worker_node->activate();  //Call activate state transition
+    std::unique_ptr<novatel_oem7_msgs::msg::INSPVAX> msg = std::make_unique<novatel_oem7_msgs::msg::INSPVAX>();
+    msg->longitude = 74.5237892;
+    msg->latitude = 38.2367299;
+    msg->height = 32.0;
     
-    gps_msgs::msg::GPSFix gps_msg_cb;
-
-    std::promise<void> sub_called;
-    std::shared_future<void> sub_called_future(sub_called.get_future());
-
-    auto callback =
-    [&gps_msg_cb, &sub_called](const gps_msgs::msg::GPSFix::SharedPtr msg) -> void
-    {
-        gps_msg_cb.longitude = msg->longitude;
-        sub_called.set_value();
-    };
-
-    novatel_oem7_msgs::msg::INSPVAX gps_msg_pub;
-    gps_msg_pub.longitude = 34.5;
     rclcpp::executors::SingleThreadedExecutor executor;
-    executor.add_node(node);
-
-    publisher->publish(gps_msg_pub);
-
-    auto worker_node = std::make_shared<carma_novatel_driver_wrapper::CarmaNovatelDriverWrapper>(rclcpp::NodeOptions());
-    rclcpp_lifecycle::State state_now;
-    worker_node->on_configure(state_now);
     executor.add_node(worker_node->get_node_base_interface());
-
-    worker_node->on_activate(state_now);
-
-    rclcpp::FutureReturnCode future_ret;
-    auto timeout = std::chrono::milliseconds(100);
-    future_ret = executor.spin_until_future_complete(sub_called_future, timeout);
-
-    for(int i = 0;i< 5;i++){
-        // executor.spin_some();
-        timeout = std::chrono::milliseconds(10);
-        future_ret = executor.spin_until_future_complete(sub_called_future, timeout);
-        publisher->publish(gps_msg_pub);
-    }
+    worker_node->inspvax_callback(move(msg));
     
-    auto subscriber = node->create_subscription<gps_msgs::msg::GPSFix>("gnss_fix_fused", 10, callback);
-    
-    timeout = std::chrono::milliseconds(100);
-    future_ret = executor.spin_until_future_complete(sub_called_future, timeout);
-
-    EXPECT_TRUE(gps_msg_cb.longitude == gps_msg_pub.longitude);
+    EXPECT_TRUE(std::abs(worker_node->gnss_fix_fused_msg_.longitude - 74.5237892) < 0.001);
 
 }
 

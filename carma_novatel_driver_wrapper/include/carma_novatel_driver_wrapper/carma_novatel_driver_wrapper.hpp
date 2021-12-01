@@ -17,7 +17,6 @@
  */
 
 #include "carma_msgs/msg/system_alert.hpp"
-#include "ros2_lifecycle_manager/ros2_lifecycle_manager.hpp"
 #include "rclcpp/rclcpp.hpp"
 #include "carma_ros2_utils/carma_lifecycle_node.hpp"
 #include "carma_novatel_driver_wrapper/carma_novatel_driver_wrapper_config.hpp"
@@ -53,9 +52,6 @@ namespace carma_novatel_driver_wrapper
     
     std::string get_qualified_name();
 
-    //! Lifecycle Manager which will track the managed nodes and call their lifecycle services on request
-    ros2_lifecycle_manager::Ros2LifecycleManager lifecycle_mgr_;
-
     //Add Publishers
     std::shared_ptr<rclcpp::Publisher<gps_msgs::msg::GPSFix>> fix_fused_pub_;
     std::shared_ptr<rclcpp::Publisher<carma_msgs::msg::SystemAlert>> alert_pub_;
@@ -65,7 +61,6 @@ namespace carma_novatel_driver_wrapper
     rclcpp::Subscription<carma_msgs::msg::SystemAlert>::SharedPtr system_alert_sub_;
     rclcpp::Subscription<novatel_oem7_msgs::msg::INSPVAX>::SharedPtr inspvax_sub_;
     rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub_;
-    std::string name_;
 
     CarmaNovatelDriverWrapperConfig config_;
 
@@ -76,6 +71,8 @@ namespace carma_novatel_driver_wrapper
     rclcpp::Time last_gnss_msg_;
     rclcpp::Time last_imu_msg_;
 
+    //gnss fused fix msg stored for testing
+    gps_msgs::msg::GPSFix gnss_fix_fused_msg_;
   };
 
 } //namespace carma_novatel_driver_wrapper

@@ -26,8 +26,7 @@ using std_msec = std::chrono::milliseconds;
 namespace carma_novatel_driver_wrapper
 {   
     CarmaNovatelDriverWrapper::CarmaNovatelDriverWrapper(const rclcpp::NodeOptions &options)
-            : CarmaLifecycleNode(options),
-            lifecycle_mgr_(get_node_base_interface(), get_node_graph_interface(), get_node_logging_interface(), get_node_services_interface())
+            : CarmaLifecycleNode(options)
     {
         
     }
@@ -36,30 +35,29 @@ namespace carma_novatel_driver_wrapper
     {
         last_imu_msg_ = this->now();
 
-        gps_msgs::msg::GPSFix fix_msg;
         // NOTE: At the moment CARMA's hardware interfaces do not use GPS status information
         // Therefore that information is not currently populated in this message
         // Convert position
-        fix_msg.header = msg->header;
-        fix_msg.latitude = msg->latitude;
-        fix_msg.longitude = msg->longitude;
-        fix_msg.altitude = msg->height;
+        gnss_fix_fused_msg_.header = msg->header;
+        gnss_fix_fused_msg_.latitude = msg->latitude;
+        gnss_fix_fused_msg_.longitude = msg->longitude;
+        gnss_fix_fused_msg_.altitude = msg->height;
         //Set position covariance
-        fix_msg.position_covariance_type = gps_msgs::msg::GPSFix::COVARIANCE_TYPE_DIAGONAL_KNOWN;
-        fix_msg.position_covariance[0] = msg->longitude_stdev * msg->longitude_stdev;
-        fix_msg.position_covariance[4] = msg->latitude_stdev * msg->latitude_stdev;
-        fix_msg.position_covariance[8] = msg->height_stdev * msg->height_stdev;
+        gnss_fix_fused_msg_.position_covariance_type = gps_msgs::msg::GPSFix::COVARIANCE_TYPE_DIAGONAL_KNOWN;
+        gnss_fix_fused_msg_.position_covariance[0] = msg->longitude_stdev * msg->longitude_stdev;
+        gnss_fix_fused_msg_.position_covariance[4] = msg->latitude_stdev * msg->latitude_stdev;
+        gnss_fix_fused_msg_.position_covariance[8] = msg->height_stdev * msg->height_stdev;
 
         //Convert orientation
         // NOTE: It is unclear in the message spec what dip represents so it will be ignored
-        fix_msg.track = msg->azimuth;
-        fix_msg.pitch = msg->pitch;
-        fix_msg.roll = msg->roll;
+        gnss_fix_fused_msg_.track = msg->azimuth;
+        gnss_fix_fused_msg_.pitch = msg->pitch;
+        gnss_fix_fused_msg_.roll = msg->roll;
 
         // GPSFix messages request uncertainty reported with 95% confidence interval. That is 2 times the standard deviation
-        fix_msg.err_track = 2.0 * msg->azimuth_stdev;
-        fix_msg.err_pitch = 2.0 * msg->pitch_stdev;
-        fix_msg.err_roll = 2.0 * msg->roll_stdev;
+        gnss_fix_fused_msg_.err_track = 2.0 * msg->azimuth_stdev;
+        gnss_fix_fused_msg_.err_pitch = 2.0 * msg->pitch_stdev;
+        gnss_fix_fused_msg_.err_roll = 2.0 * msg->roll_stdev;
 
         // Convert Velocity
         std::vector<double> components, variances;
@@ -70,14 +68,13 @@ namespace carma_novatel_driver_wrapper
         variances.push_back(2.0 * msg->east_velocity_stdev);
 
         std::tuple<double, double> speed_tuple = uncertainty_tools::computeVectorMagnitudeAndUncertainty(components, variances);
-        fix_msg.speed = std::get<0>(speed_tuple);
-        fix_msg.climb = msg->up_velocity;
+        gnss_fix_fused_msg_.speed = std::get<0>(speed_tuple);
+        gnss_fix_fused_msg_.climb = msg->up_velocity;
 
-        fix_msg.err_climb = 2.0 * msg->up_velocity_stdev;
-        fix_msg.err_speed = std::get<1>(speed_tuple);
+        gnss_fix_fused_msg_.err_climb = 2.0 * msg->up_velocity_stdev;
+        gnss_fix_fused_msg_.err_speed = std::get<1>(speed_tuple);
 
-        fix_fused_pub_->publish(fix_msg);
-
+        fix_fused_pub_->publish(gnss_fix_fused_msg_);
     }
 
     void CarmaNovatelDriverWrapper::imu_callback(const sensor_msgs::msg::Imu::UniquePtr msg)
@@ -105,12 +102,7 @@ namespace carma_novatel_driver_wrapper
 
         fix_fused_pub_ = create_publisher<gps_msgs::msg::GPSFix>("gnss_fix_fused", 10.0);
         alert_pub_ = create_publisher<carma_msgs::msg::SystemAlert>("system_alert",10);
-
-        //Initialize lifecycle manager
-        std::vector <std::string> managed_nodes;
-        managed_nodes.push_back(config_.subsystem_namespace);
-        lifecycle_mgr_.set_managed_nodes(managed_nodes);
-
+        
         return CallbackReturn::SUCCESS;
     }
 

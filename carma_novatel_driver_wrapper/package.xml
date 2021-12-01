@@ -27,9 +27,7 @@
 
   <depend>carma_ros2_utils</depend>
   <depend>carma_msgs</depend>
-  <depend>lifecycle_msgs</depend>
   <depend>rclcpp</depend>
-  <depend>ros2_lifecycle_manager</depend>
   <depend>sensor_msgs</depend>
   <depend>gps_msgs</depend>
   <depend>carma_driver_msgs</depend>
@@ -37,6 +35,7 @@
   <depend>uncertainty_tools</depend>
 
   <test_depend>ament_cmake_gtest</test_depend>
+  <exec_depend>ros2launch</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>

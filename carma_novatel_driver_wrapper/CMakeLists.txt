@@ -14,9 +14,9 @@ ament_auto_add_library(carma_novatel_driver_wrapper_lib SHARED
   src/carma_novatel_driver_wrapper.cpp
 )
 
-ament_auto_add_executable(main src/main.cpp)
+ament_auto_add_executable(carma_novatel_wrapper_node src/main.cpp)
 
-target_link_libraries(main 
+target_link_libraries(carma_novatel_wrapper_node 
  carma_novatel_driver_wrapper_lib
 )
 
