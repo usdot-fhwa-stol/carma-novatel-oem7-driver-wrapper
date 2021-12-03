@@ -1,8 +1,17 @@
 cmake_minimum_required(VERSION 3.5)
 project(carma_novatel_driver_wrapper)
 
+carma_package()
+
 find_package(ament_cmake_auto REQUIRED)
 find_package(carma_msgs REQUIRED)
+find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(gps_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(novatel_oem7_msgs REQUIRED)
+find_package(uncertainty_tools REQUIRED)
+find_package(carma_ros2_utils REQUIRED)
 
 ament_auto_find_build_dependencies()
 

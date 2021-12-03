@@ -14,12 +14,14 @@
 #  License for the specific language governing permissions and limitations under
 #  the License.
 
-# Source Environment variables
-source /opt/ros/foxy/setup.bash
 cd ~/
 # Install dependencies
-apt-get update
+sudo apt-get update
+rosdep update
 rosdep install --from-paths ~/src --ignore-src -r -y
-apt-get install ros-foxy-nmea-msgs
+sudo apt-get install ros-foxy-nmea-msgs
+sudo apt-get install ros-foxy-gps-msgs
+# Source Environment variables
+source /opt/ros/foxy/setup.bash
 # Build
-colcon build --symlink-install
+colcon build

@@ -40,4 +40,4 @@ LABEL org.label-schema.build-date=${BUILD_DATE}
 
 COPY --chown=carma --from=build /home/carma/install /opt/carma/install
 
-# CMD [ "wait-for-it.sh", "localhost:11311", "--", "roslaunch", "carma-novatel-gps-driver-wrapper", "carma-novatel-gps-driver-wrapper.launch"]
+CMD [ "wait-for-it.sh", "localhost:11311", "--", "ros2","launch", "carma-novatel-driver-wrapper", "carma-novatel-driver-wrapper-launch.py"]
