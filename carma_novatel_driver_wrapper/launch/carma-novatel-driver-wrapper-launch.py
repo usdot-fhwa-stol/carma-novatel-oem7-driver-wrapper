@@ -15,19 +15,34 @@
 
 import launch
 import launch.actions
-import launch.substitutions
+from launch.actions.declare_launch_argument import DeclareLaunchArgument
 import launch_ros.actions
+from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
 from launch_ros.actions import Node
 
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+
+#Nodes
+carma_novatel_driver_wrapper = Node(
+    package = 'carma_novatel_driver_wrapper',
+    executable = 'carma_novatel_wrapper_node',
+    name='carma_novatel_driver_wrapper'
+)
+
+novatel_driver_pkg = get_package_share_directory('novatel_oem7_driver')
+novatel_oem7_driver = IncludeLaunchDescription(
+    PythonLaunchDescriptionSource(['/',novatel_driver_pkg, '/launch','/oem7_net.launch.py']),
+    launch_arguments={'oem7_ip_addr': '192.168.74.10', 'oem7_port' : '2000', 'oem7_if': 'Oem7ReceiverTcp'}.items(),
+)
+
+
 def generate_launch_description():
     return LaunchDescription(
         [
-            Node(
-                package='carma_novatel_driver_wrapper',
-                executable='carma_novatel_wrapper_node',
-                name='carma_novatel_driver_wrapper'
-            )
+            carma_novatel_driver_wrapper,
+            novatel_oem7_driver
         ]
     )

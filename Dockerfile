@@ -14,13 +14,10 @@
 
 FROM usdotfhwastoldev/carma-base:foxy-develop as base_image
 
-FROM base_image as build
-
 RUN mkdir ~/src
 COPY --chown=carma . /home/carma/src/
 RUN ~/src/docker/checkout.bash
 RUN ~/src/docker/install.sh
-
 
 FROM base_image
 
@@ -37,7 +34,5 @@ LABEL org.label-schema.url="https://highways.dot.gov/research/research-programs/
 LABEL org.label-schema.vcs-url="https://github.com/usdot-fhwa-stol/carma-novatel-oem7-driver-wrapper/"
 LABEL org.label-schema.vcs-ref=${VCS_REF}
 LABEL org.label-schema.build-date=${BUILD_DATE}
-
-COPY --chown=carma --from=build /home/carma/install /opt/carma/install
 
 CMD [ "wait-for-it.sh", "localhost:11311", "--", "ros2","launch", "carma-novatel-driver-wrapper", "carma-novatel-driver-wrapper-launch.py"]

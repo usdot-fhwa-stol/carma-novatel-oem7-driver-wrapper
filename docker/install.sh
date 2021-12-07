@@ -15,13 +15,14 @@
 #  the License.
 
 cd ~/
+# Source Environment variables
+source /opt/ros/foxy/setup.bash
 # Install dependencies
 sudo apt-get update
 rosdep update
-rosdep install --from-paths ~/src --ignore-src -r -y
-sudo apt-get install ros-foxy-nmea-msgs
-sudo apt-get install ros-foxy-gps-msgs
-# Source Environment variables
-source /opt/ros/foxy/setup.bash
-# Build
-colcon build
+rosdep install --from-paths src --ignore-src -r -y
+# Build novatel driver and wrapper
+#Install to /opt/carma
+colcon build --packages-up-to carma_novatel_driver_wrapper --install-base /opt/carma/install
+# Remove source code
+sudo rm -r src log build
