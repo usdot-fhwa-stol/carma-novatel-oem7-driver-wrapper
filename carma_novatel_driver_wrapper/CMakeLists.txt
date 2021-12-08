@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(carma_novatel_driver_wrapper)
 
-carma_package()
+# carma_package()
 
 find_package(ament_cmake_auto REQUIRED)
 find_package(carma_msgs REQUIRED)

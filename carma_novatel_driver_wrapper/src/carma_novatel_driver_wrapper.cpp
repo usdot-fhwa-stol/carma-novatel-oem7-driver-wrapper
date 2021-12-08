@@ -19,7 +19,7 @@
 #include "carma_novatel_driver_wrapper/carma_novatel_driver_wrapper.hpp"
 #include <gps_msgs/msg/gps_fix.hpp>
 #include <sensor_msgs/msg/imu.hpp>
-// #include <uncertainty_tools/uncertainty_tools.h>
+#include <uncertainty_tools/uncertainty_tools.h>
 
 using std_msec = std::chrono::milliseconds;
 
@@ -95,7 +95,7 @@ namespace carma_novatel_driver_wrapper
         RCLCPP_INFO_STREAM(this->get_logger(), "Loaded config: " << config_);
         
         //Add subscribers and publishers
-        inspvax_sub_ = create_subscription<novatel_oem7_msgs::msg::INSPVAX>("INSPVAX", 5,
+        inspvax_sub_ = create_subscription<novatel_oem7_msgs::msg::INSPVAX>("novatel/oem7/inspvax", 5,
             std::bind(&CarmaNovatelDriverWrapper::inspvax_callback, this, std::placeholders::_1));
         imu_sub_ = create_subscription<sensor_msgs::msg::Imu>("imu_raw", 5,
             std::bind(&CarmaNovatelDriverWrapper::imu_callback, this, std::placeholders::_1));

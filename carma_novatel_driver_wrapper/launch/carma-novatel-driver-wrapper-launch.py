@@ -35,7 +35,7 @@ carma_novatel_driver_wrapper = Node(
 novatel_driver_pkg = get_package_share_directory('novatel_oem7_driver')
 novatel_oem7_driver = IncludeLaunchDescription(
     PythonLaunchDescriptionSource(['/',novatel_driver_pkg, '/launch','/oem7_net.launch.py']),
-    launch_arguments={'oem7_ip_addr': '192.168.74.10', 'oem7_port' : '2000', 'oem7_if': 'Oem7ReceiverTcp'}.items(),
+    launch_arguments={'oem7_ip_addr': '192.168.88.29', 'oem7_port' : '2000', 'oem7_if': 'Oem7ReceiverTcp'}.items(),
 )
 
 

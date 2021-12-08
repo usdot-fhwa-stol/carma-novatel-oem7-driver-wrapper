@@ -14,9 +14,16 @@
 
 FROM usdotfhwastoldev/carma-base:foxy-develop as base_image
 
+FROM base_image as source_code
+# Get source code
 RUN mkdir ~/src
 COPY --chown=carma . /home/carma/src/
 RUN ~/src/docker/checkout.bash
+
+FROM base_image as install
+RUN mkdir ~/src
+COPY --from=source_code --chown=carma /home/carma/src /home/carma/src
+
 RUN ~/src/docker/install.sh
 
 FROM base_image
@@ -35,4 +42,7 @@ LABEL org.label-schema.vcs-url="https://github.com/usdot-fhwa-stol/carma-novatel
 LABEL org.label-schema.vcs-ref=${VCS_REF}
 LABEL org.label-schema.build-date=${BUILD_DATE}
 
-CMD [ "wait-for-it.sh", "localhost:11311", "--", "ros2","launch", "carma-novatel-driver-wrapper", "carma-novatel-driver-wrapper-launch.py"]
+COPY --from=install --chown=carma /home/carma/install /opt/carma/install
+COPY --from=install --chown=carma /opt/ros /opt/ros
+
+CMD [ "wait-for-it.sh", "localhost:11311", "--", "ros2","launch", "carma_novatel_driver_wrapper", "carma-novatel-driver-wrapper-launch.py"]
