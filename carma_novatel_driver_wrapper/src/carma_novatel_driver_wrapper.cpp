@@ -33,7 +33,7 @@ namespace carma_novatel_driver_wrapper
     
     void CarmaNovatelDriverWrapper::inspvax_callback(const novatel_oem7_msgs::msg::INSPVAX::UniquePtr msg)
     {
-        last_imu_msg_ = this->now();
+        last_gnss_msg_ = this->now();
 
         // NOTE: At the moment CARMA's hardware interfaces do not use GPS status information
         // Therefore that information is not currently populated in this message
@@ -79,7 +79,7 @@ namespace carma_novatel_driver_wrapper
 
     void CarmaNovatelDriverWrapper::imu_callback(const sensor_msgs::msg::Imu::UniquePtr msg)
     {
-        last_gnss_msg_ = this->now();
+        last_imu_msg_ = this->now();
     }
 
     
