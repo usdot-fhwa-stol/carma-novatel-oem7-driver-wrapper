@@ -6,7 +6,6 @@
 #include <future>
 #include <rclcpp/executor.hpp>
 
-using std_msec = std::chrono::milliseconds;
 
 TEST(TestCarmaNovatelDriverWrapper, Test_GPScalback){
 
@@ -19,8 +18,6 @@ TEST(TestCarmaNovatelDriverWrapper, Test_GPScalback){
     msg->latitude = 38.2367299;
     msg->height = 32.0;
     
-    rclcpp::executors::SingleThreadedExecutor executor;
-    executor.add_node(worker_node->get_node_base_interface());
     worker_node->inspvax_callback(move(msg));
     
     EXPECT_TRUE(std::abs(worker_node->gnss_fix_fused_msg_.longitude - 74.5237892) < 0.001);

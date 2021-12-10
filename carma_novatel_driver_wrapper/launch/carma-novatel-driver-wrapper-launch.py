@@ -13,36 +13,41 @@
 #  License for the specific language governing permissions and limitations under
 #  the License.
 
-import launch
-import launch.actions
-from launch.actions.declare_launch_argument import DeclareLaunchArgument
-import launch_ros.actions
+
 from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
 from launch_ros.actions import Node
 
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
+
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
-#Nodes
-carma_novatel_driver_wrapper = Node(
-    package = 'carma_novatel_driver_wrapper',
-    executable = 'carma_novatel_wrapper_node',
-    name='carma_novatel_driver_wrapper'
-)
-
-novatel_driver_pkg = get_package_share_directory('novatel_oem7_driver')
-novatel_oem7_driver = IncludeLaunchDescription(
-    PythonLaunchDescriptionSource(['/',novatel_driver_pkg, '/launch','/oem7_net.launch.py']),
-    launch_arguments={'oem7_ip_addr': '192.168.88.29', 'oem7_port' : '2000', 'oem7_if': 'Oem7ReceiverTcp'}.items(),
-)
-
-
 def generate_launch_description():
+    
+    log_level = LaunchConfiguration('log_level')
+    declare_log_level_arg = DeclareLaunchArgument(
+        name ='log_level', default_value = 'WARN')
+    
+    carma_novatel_driver_wrapper = Node(
+        package = 'carma_novatel_driver_wrapper',
+        executable = 'carma_novatel_wrapper_node',
+        name='carma_novatel_driver_wrapper',
+        arguments=['--ros-args', '--log-level', log_level ]
+    )    
+
+    novatel_driver_pkg = get_package_share_directory('novatel_oem7_driver')
+    novatel_driver_node = IncludeLaunchDescription(
+                PythonLaunchDescriptionSource(['/', novatel_driver_pkg, '/launch','/oem7_net.launch.py']),
+                launch_arguments={'oem7_ip_addr': '192.168.88.29', 'oem7_port' : '2000', 'oem7_if': 'Oem7ReceiverTcp'}.items(),
+    )
+
     return LaunchDescription(
         [
+            declare_log_level_arg,
             carma_novatel_driver_wrapper,
-            novatel_oem7_driver
+            novatel_driver_node
         ]
     )

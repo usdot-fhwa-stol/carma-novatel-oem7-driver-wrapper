@@ -1,6 +1,3 @@
-# String: The namespace for nodes in this subsystem
-subsystem_namespace: /hardware_interface
-
 # Double: Length of time in which an IMU message cannot be received before it will be considered a fault
 # Units: seconds
 imu_timeout: 0.25

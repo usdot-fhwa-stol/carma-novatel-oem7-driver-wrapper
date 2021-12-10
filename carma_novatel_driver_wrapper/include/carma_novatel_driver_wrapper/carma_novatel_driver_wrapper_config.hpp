@@ -27,9 +27,6 @@ namespace carma_novatel_driver_wrapper
 
     struct CarmaNovatelDriverWrapperConfig
     {
-        //! Node Namespace. Any node under this namespace shall have its lifecycle managed by this controller
-        std::string subsystem_namespace = "/false_namespace";
-
         uint64_t imu_timeout = 1000;
         uint64_t gnss_timeout = 1000;
 
@@ -37,7 +34,6 @@ namespace carma_novatel_driver_wrapper
         friend std::ostream &operator<<(std::ostream &output, const CarmaNovatelDriverWrapperConfig &c)
         {
             output  << "CarmaNovatelDriverWrapperConfig { "<<std::endl
-                    << "subsystem_namespace: " << c.subsystem_namespace << std::endl
                     <<"imu_timeout: "<< c.imu_timeout << std::endl
                     <<"gnss_timeout: "<< c.gnss_timeout<< std::endl; 
             

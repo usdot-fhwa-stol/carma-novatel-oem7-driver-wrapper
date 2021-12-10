@@ -48,13 +48,12 @@ namespace carma_novatel_driver_wrapper
     // Overrides
     ////
     carma_ros2_utils::CallbackReturn handle_on_configure(const rclcpp_lifecycle::State &prev_state);
-    carma_ros2_utils::CallbackReturn on_system_alert(const carma_msgs::msg::SystemAlert::UniquePtr msg);
+
     
     std::string get_qualified_name();
 
     //Add Publishers
     std::shared_ptr<rclcpp::Publisher<gps_msgs::msg::GPSFix>> fix_fused_pub_;
-    std::shared_ptr<rclcpp::Publisher<carma_msgs::msg::SystemAlert>> alert_pub_;
     
     
     //Add Subscribers
@@ -67,9 +66,12 @@ namespace carma_novatel_driver_wrapper
     //Callbacks
     void inspvax_callback(const novatel_oem7_msgs::msg::INSPVAX::UniquePtr msg);
     void imu_callback(const sensor_msgs::msg::Imu::UniquePtr msg);
+    void timerCallback();
 
     rclcpp::Time last_gnss_msg_;
     rclcpp::Time last_imu_msg_;
+
+    rclcpp::TimerBase::SharedPtr timer_;
 
     //gnss fused fix msg stored for testing
     gps_msgs::msg::GPSFix gnss_fix_fused_msg_;

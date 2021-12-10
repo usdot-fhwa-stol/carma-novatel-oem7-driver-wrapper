@@ -90,7 +90,6 @@ namespace carma_novatel_driver_wrapper
         //Load Parameters
         config_.imu_timeout = this->declare_parameter<int64_t>("imu_timout", config_.imu_timeout);
         config_.gnss_timeout = this->declare_parameter<int64_t>("gnss_timout", config_.gnss_timeout);
-        config_.subsystem_namespace = this->declare_parameter<std::string>("subsystem_namespace", config_.subsystem_namespace);
 
         RCLCPP_INFO_STREAM(this->get_logger(), "Loaded config: " << config_);
         
@@ -101,9 +100,26 @@ namespace carma_novatel_driver_wrapper
             std::bind(&CarmaNovatelDriverWrapper::imu_callback, this, std::placeholders::_1));
 
         fix_fused_pub_ = create_publisher<gps_msgs::msg::GPSFix>("gnss_fix_fused", 10.0);
-        alert_pub_ = create_publisher<carma_msgs::msg::SystemAlert>("system_alert",10);
+        
+        timer_ = this->create_wall_timer(std::chrono::milliseconds(500), 
+        std::bind(&CarmaNovatelDriverWrapper::timerCallback, this));
         
         return CallbackReturn::SUCCESS;
+    }
+
+    void CarmaNovatelDriverWrapper::timerCallback(){
+        rclcpp::Time now = this->now();
+        rclcpp::Duration duration_gnss = now - last_gnss_msg_;
+        rclcpp::Duration duration_imu = now - last_imu_msg_;
+
+        if(duration_gnss.seconds() > config_.gnss_timeout){
+            throw std::invalid_argument("GPS message wait timed out");
+        }
+
+        if(duration_imu.seconds() > config_.imu_timeout){
+            throw std::invalid_argument("IMU message wait timed out");
+        }
+   
     }
 
 }

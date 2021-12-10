@@ -39,14 +39,9 @@
   <depend>uncertainty_tools</depend>
 
   <test_depend>ament_cmake_gtest</test_depend>
-  <test_depend>carma_msgs</test_depend>
-  <test_depend>rclcpp</test_depend>
-  <test_depend>gps_msgs</test_depend>
-  <test_depend>sensor_msgs</test_depend>
-  <test_depend>novatel_oem7_msgs</test_depend>
-  <test_depend>uncertainty_tools</test_depend>
-  <test_depend>carma_ros2_utils</test_depend>
-  <exec_depend>ros2launch</exec_depend>
+  
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>
