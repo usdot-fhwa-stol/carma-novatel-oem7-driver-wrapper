@@ -40,6 +40,8 @@ namespace carma_novatel_driver_wrapper
                     << "subsystem_namespace: " << c.subsystem_namespace << std::endl
                     <<"imu_timeout: "<< c.imu_timeout << std::endl
                     <<"gnss_timeout: "<< c.gnss_timeout<< std::endl; 
+            
+            return output;
         }
 
     };
