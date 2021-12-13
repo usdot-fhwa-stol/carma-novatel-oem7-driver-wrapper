@@ -43,7 +43,7 @@ if [[ "$BRANCH" = "foxy/develop" ]]; then
       sudo git clone https://github.com/usdot-fhwa-stol/carma-utils.git --branch $BRANCH
 else
       sudo git clone https://github.com/usdot-fhwa-stol/carma-msgs.git ${dir}/src/CARMAMsgs --branch foxy/develop
-      sudo git clone https://github.com/usdot-fhwa-stol/carma-utils.git --branch $BRANCH
+      sudo git clone https://github.com/usdot-fhwa-stol/carma-utils.git --branch foxy/develop
 fi
 
 # novatel driver 
