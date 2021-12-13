@@ -29,13 +29,15 @@ namespace carma_novatel_driver_wrapper
     {
         uint64_t imu_timeout = 1000;
         uint64_t gnss_timeout = 1000;
+        uint64_t timer_callback = 500;
 
         // Stream operator for this config
         friend std::ostream &operator<<(std::ostream &output, const CarmaNovatelDriverWrapperConfig &c)
         {
             output  << "CarmaNovatelDriverWrapperConfig { "<<std::endl
                     <<"imu_timeout: "<< c.imu_timeout << std::endl
-                    <<"gnss_timeout: "<< c.gnss_timeout<< std::endl; 
+                    <<"gnss_timeout: "<< c.gnss_timeout<< std::endl
+                    <<"timer_callback: "<<c.timer_callback<<std::endl;
             
             return output;
         }

@@ -101,7 +101,7 @@ namespace carma_novatel_driver_wrapper
 
         fix_fused_pub_ = create_publisher<gps_msgs::msg::GPSFix>("gnss_fix_fused", 10.0);
         
-        timer_ = this->create_wall_timer(std::chrono::milliseconds(500), 
+        timer_ = this->create_wall_timer(std::chrono::milliseconds(config_.timer_callback), 
         std::bind(&CarmaNovatelDriverWrapper::timerCallback, this));
         
         return CallbackReturn::SUCCESS;
