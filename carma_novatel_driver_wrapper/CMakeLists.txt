@@ -22,6 +22,9 @@ target_link_libraries(carma_novatel_wrapper_node
  carma_novatel_driver_wrapper_lib
 )
 
+# Register component
+rclcpp_components_register_nodes(carma_novatel_driver_wrapper_lib "carma_novatel_driver_wrapper::CarmaNovatelDriverWrapper")
+
 if(BUILD_TESTING)  
   find_package(ament_cmake_gtest REQUIRED)
 

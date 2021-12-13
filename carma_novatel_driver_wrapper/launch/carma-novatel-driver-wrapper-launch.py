@@ -25,27 +25,54 @@ from launch.substitutions import LaunchConfiguration
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
+from launch_ros.actions import ComposableNodeContainer
+from launch_ros.descriptions import ComposableNode
+
+import os
+
 def generate_launch_description():
     
+    # Declare arguments
     log_level = LaunchConfiguration('log_level')
     declare_log_level_arg = DeclareLaunchArgument(
-        name ='log_level', default_value = 'WARN')
-    
-    carma_novatel_driver_wrapper = Node(
-        package = 'carma_novatel_driver_wrapper',
-        executable = 'carma_novatel_wrapper_node',
-        name='carma_novatel_driver_wrapper',
-        arguments=['--ros-args', '--log-level', log_level ]
-    )    
+        name ='log_level', default_value = 'WARN', description="Log level to print.", choices=["DEBUG","INFO","WARN","ERROR","FATAL"])
 
+    ip_addr = LaunchConfiguration('ip_addr')
+    declare_ip_addr = DeclareLaunchArgument(name = 'ip_addr', default_value ='192.168.88.29', description="The IP of the gps")
+
+    port = LaunchConfiguration('port')
+    declare_port = DeclareLaunchArgument(name = 'port', default_value='2000', description = "The port to use")
+    
+    # Define novatel driver node
     novatel_driver_pkg = get_package_share_directory('novatel_oem7_driver')
-    ip_addr = "oem7_ip_addr"
-    declare_ip_addr = DeclareLaunchArgument(name = 'ip_addr', default_value ='192.168.88.29')
-    port = "oem7_port"
-    declare_port = DeclareLaunchArgument(name = 'port', default_value='2000')
     novatel_driver_node = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(['/', novatel_driver_pkg, '/launch','/oem7_net.launch.py']),
                 launch_arguments={'oem7_ip_addr': ip_addr, 'oem7_port' : port, 'oem7_if': 'Oem7ReceiverTcp'}.items(),
+    )
+
+    # Add novatel wrapper to carma container
+    param_file_path = os.path.join(
+        get_package_share_directory('carma_novatel_driver_wrapper'),'config/parameters.yaml')
+    
+    novatel_wrapper_container = ComposableNodeContainer(
+        package = 'carma_ros2_utils',
+        name ='carma_novatel_driver_wrapper_container',
+        namespace = '/',
+        executable = 'carma_component_container_mt',
+        composable_node_descriptions=[
+
+            # Launch the core nodes
+            ComposableNode(
+                package = 'carma_novatel_driver_wrapper',
+                plugin='carma_novatel_driver_wrapper::CarmaNovatelDriverWrapper',
+                name='carma_novatel_driver_wrapper_node',
+                extra_arguments=[
+                    {'use_intra_process_comms': True},
+                    {'--log-level' : log_level}
+                ],
+                parameters=[ param_file_path ]
+            )
+        ]
     )
 
     return LaunchDescription(
@@ -53,7 +80,7 @@ def generate_launch_description():
             declare_log_level_arg,
             declare_ip_addr,
             declare_port, 
-            carma_novatel_driver_wrapper,
+            novatel_wrapper_container,
             novatel_driver_node
         ]
     )

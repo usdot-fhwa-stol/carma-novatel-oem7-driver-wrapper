@@ -5,3 +5,7 @@ imu_timeout: 0.25
 # Double: Length of time in which a GPS message cannot be received before it will be considered a fault
 # Units: seconds
 gnss_timeout: 0.25
+
+# Double: Length of time after which a callback triggers to check for imu and gnss timeout
+# Units: milliseconds
+timer_callback: 500
