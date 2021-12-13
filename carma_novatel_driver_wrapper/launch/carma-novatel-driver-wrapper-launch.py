@@ -39,14 +39,20 @@ def generate_launch_description():
     )    
 
     novatel_driver_pkg = get_package_share_directory('novatel_oem7_driver')
+    ip_addr = "oem7_ip_addr"
+    declare_ip_addr = DeclareLaunchArgument(name = 'ip_addr', default_value ='192.168.88.29')
+    port = "oem7_port"
+    declare_port = DeclareLaunchArgument(name = 'port', default_value='2000')
     novatel_driver_node = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(['/', novatel_driver_pkg, '/launch','/oem7_net.launch.py']),
-                launch_arguments={'oem7_ip_addr': '192.168.88.29', 'oem7_port' : '2000', 'oem7_if': 'Oem7ReceiverTcp'}.items(),
+                launch_arguments={'oem7_ip_addr': ip_addr, 'oem7_port' : port, 'oem7_if': 'Oem7ReceiverTcp'}.items(),
     )
 
     return LaunchDescription(
         [
             declare_log_level_arg,
+            declare_ip_addr,
+            declare_port, 
             carma_novatel_driver_wrapper,
             novatel_driver_node
         ]

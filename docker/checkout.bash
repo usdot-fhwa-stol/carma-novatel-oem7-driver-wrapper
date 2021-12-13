@@ -38,9 +38,6 @@ done
 cd ~/src
 ####Add dependencies#######
 
-# novatel driver 
-sudo git clone https://github.com/novatel/novatel_oem7_driver.git --branch ros2-dev 3055e220bb9715b59c3ef53ab0aba05a495d9d5c
-
 if [[ "$BRANCH" = "foxy/develop" ]]; then
       sudo git clone https://github.com/usdot-fhwa-stol/carma-msgs.git ${dir}/src/CARMAMsgs --branch $BRANCH
       sudo git clone https://github.com/usdot-fhwa-stol/carma-utils.git --branch test/build_novatel_wrapper
@@ -48,3 +45,9 @@ else
       sudo git clone https://github.com/usdot-fhwa-stol/carma-msgs.git ${dir}/src/CARMAMsgs --branch foxy/develop
       sudo git clone https://github.com/usdot-fhwa-stol/carma-utils.git --branch test/build_novatel_wrapper
 fi
+
+# novatel driver 
+sudo git clone https://github.com/novatel/novatel_oem7_driver.git --branch ros2-dev 
+# Checkout verified commit
+cd novatel_oem7_driver
+sudo git checkout 3055e220bb9715b59c3ef53ab0aba05a495d9d5c
