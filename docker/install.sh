@@ -14,12 +14,13 @@
 #  License for the specific language governing permissions and limitations under
 #  the License.
 
+cd ~/
 # Source Environment variables
 source /opt/ros/foxy/setup.bash
-cd ~/
+source /home/carma/catkin/setup.bash
 # Install dependencies
-apt-get update
-rosdep install --from-paths ~/src --ignore-src -r -y
-apt-get install ros-foxy-nmea-msgs
-# Build
-colcon build --symlink-install
+sudo apt-get update
+rosdep update
+rosdep install --from-paths src --ignore-src -r -y
+# Build 
+colcon build --packages-up-to novatel_oem7_driver carma_novatel_driver_wrapper
