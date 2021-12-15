@@ -65,7 +65,7 @@ def generate_launch_description():
             ComposableNode(
                 package = 'carma_novatel_driver_wrapper',
                 plugin='carma_novatel_driver_wrapper::CarmaNovatelDriverWrapper',
-                name='carma_novatel_driver_wrapper_node',
+                name='carma_novatel_driver_wrapper_lib',
                 extra_arguments=[
                     {'use_intra_process_comms': True},
                     {'--log-level' : log_level}
