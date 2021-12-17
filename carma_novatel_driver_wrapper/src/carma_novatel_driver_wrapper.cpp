@@ -101,9 +101,17 @@ namespace carma_novatel_driver_wrapper
 
         fix_fused_pub_ = create_publisher<gps_msgs::msg::GPSFix>("gnss_fix_fused", 10.0);
         
+        return CallbackReturn::SUCCESS;
+    }
+
+    carma_ros2_utils::CallbackReturn CarmaNovatelDriverWrapper::handle_on_activate(const rclcpp_lifecycle::State &){
+
         timer_ = this->create_wall_timer(std::chrono::milliseconds(config_.timer_callback), 
         std::bind(&CarmaNovatelDriverWrapper::timerCallback, this));
-        
+
+        last_gnss_msg_ = this->now();
+        last_imu_msg_ = this->now();
+
         return CallbackReturn::SUCCESS;
     }
 
