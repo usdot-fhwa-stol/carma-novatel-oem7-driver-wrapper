@@ -49,6 +49,8 @@ namespace carma_novatel_driver_wrapper
     ////
     carma_ros2_utils::CallbackReturn handle_on_configure(const rclcpp_lifecycle::State &prev_state);
 
+    carma_ros2_utils::CallbackReturn handle_on_activate(const rclcpp_lifecycle::State &prev_state);
+
     
     std::string get_qualified_name();
 
