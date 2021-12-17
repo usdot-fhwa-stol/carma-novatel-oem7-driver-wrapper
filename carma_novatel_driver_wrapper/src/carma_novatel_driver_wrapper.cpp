@@ -103,6 +103,9 @@ namespace carma_novatel_driver_wrapper
         
         timer_ = this->create_wall_timer(std::chrono::milliseconds(config_.timer_callback), 
         std::bind(&CarmaNovatelDriverWrapper::timerCallback, this));
+
+        last_gnss_msg_ = this->now();
+        last_imu_msg_ = this->now();
         
         return CallbackReturn::SUCCESS;
     }
