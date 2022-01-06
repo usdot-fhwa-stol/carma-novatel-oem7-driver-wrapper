@@ -28,7 +28,10 @@ namespace carma_novatel_driver_wrapper
     CarmaNovatelDriverWrapper::CarmaNovatelDriverWrapper(const rclcpp::NodeOptions &options)
             : CarmaLifecycleNode(options)
     {
-        
+        config_ = CarmaNovatelDriverWrapperConfig();
+        config_.imu_timeout = this->declare_parameter<double>("imu_timout", config_.imu_timeout);
+        config_.gnss_timeout = this->declare_parameter<double>("gnss_timout", config_.gnss_timeout);
+        config_.timer_callback = this->declare_parameter<int>("timer_callback", config_.timer_callback);
     }
     
     void CarmaNovatelDriverWrapper::inspvax_callback(const novatel_oem7_msgs::msg::INSPVAX::UniquePtr msg)
@@ -87,9 +90,13 @@ namespace carma_novatel_driver_wrapper
     {
         RCLCPP_INFO_STREAM(this->get_logger(), "Novatel Driver wrapper trying to configure");
 
+        //Create initial config
+        config_ = CarmaNovatelDriverWrapperConfig();
+
         //Load Parameters
-        config_.imu_timeout = this->declare_parameter<int64_t>("imu_timout", config_.imu_timeout);
-        config_.gnss_timeout = this->declare_parameter<int64_t>("gnss_timout", config_.gnss_timeout);
+        this->get_parameter<double>("imu_timout", config_.imu_timeout);
+        this->get_parameter<double>("gnss_timout", config_.gnss_timeout);
+        this->get_parameter<int>("timer_callback", config_.timer_callback);
 
         RCLCPP_INFO_STREAM(this->get_logger(), "Loaded config: " << config_);
         
