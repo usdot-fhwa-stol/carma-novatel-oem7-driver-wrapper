@@ -35,9 +35,6 @@ while [[ $# -gt 0 ]]; do
       esac
 done
 
-cd ~/src
-####Add dependencies#######
-
 if [[ "$BRANCH" = "develop" ]]; then
       sudo git clone https://github.com/usdot-fhwa-stol/carma-msgs.git ${dir}/src/CARMAMsgs --branch $BRANCH
       sudo git clone https://github.com/usdot-fhwa-stol/carma-utils.git --branch $BRANCH
