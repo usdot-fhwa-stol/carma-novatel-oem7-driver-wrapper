@@ -24,7 +24,7 @@ while [[ $# -gt 0 ]]; do
       arg="$1"
       case $arg in
             -d|--develop)
-                  BRANCH=foxy/develop
+                  BRANCH=develop
                   shift
             ;;
             -r|--root)
@@ -38,12 +38,12 @@ done
 cd ~/src
 ####Add dependencies#######
 
-if [[ "$BRANCH" = "foxy/develop" ]]; then
+if [[ "$BRANCH" = "develop" ]]; then
       sudo git clone https://github.com/usdot-fhwa-stol/carma-msgs.git ${dir}/src/CARMAMsgs --branch $BRANCH
       sudo git clone https://github.com/usdot-fhwa-stol/carma-utils.git --branch $BRANCH
 else
-      sudo git clone https://github.com/usdot-fhwa-stol/carma-msgs.git ${dir}/src/CARMAMsgs --branch foxy/develop
-      sudo git clone https://github.com/usdot-fhwa-stol/carma-utils.git --branch foxy/develop
+      sudo git clone https://github.com/usdot-fhwa-stol/carma-msgs.git ${dir}/src/CARMAMsgs --branch develop
+      sudo git clone https://github.com/usdot-fhwa-stol/carma-utils.git --branch develop
 fi
 
 # novatel driver 
