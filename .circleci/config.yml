@@ -1,5 +1,4 @@
 version: 2
-
 #  Copyright (C) 2018-2021 LEIDOS.
 # 
 #  Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -19,10 +18,11 @@ version: 2
 # CI will report failure if any executed command returns and error status
 # Operations performed are as follows
 # Build source code
-# Run unit tests for C++
+# Run unit tests for C++ and Java
 # Run static code analyzer for SourceCloud
 # Upload test results
 # Every run command should start with source ${INIT_ENV} to ensure all default dependancies are available
+
 jobs:
   build:
     # Pull docker image from docker hub
@@ -31,12 +31,11 @@ jobs:
       - image: usdotfhwastoldev/carma-base:develop
         user: carma
         environment:
-          TERM: xterm
+          TERM: xterm # use xterm to get full display output from build
           INIT_ENV: /home/carma/.base-image/init-env.sh
-          COVERAGE_FLAGS: -g --coverage -fprofile-arcs -ftest-coverage -Wall
-    resource_class: large
-    # Set working directory
+          ROS_2_ENV: /opt/ros/foxy/setup.bash
     working_directory: "/opt/carma/"
+    resource_class: large
     # Execution steps
     steps:
       - run:
@@ -57,13 +56,13 @@ jobs:
           name: Build Driver
           command: |
             source ${INIT_ENV}
-            export ROS_PARALLEL_JOBS='-j3 -l3' # Try to reduce memory consumption on build
+            source ${ROS_2_ENV}
             build-wrapper-linux-x86-64 --out-dir /opt/carma/bw-output bash make_with_coverage.bash -m -e /opt/carma/ -o ./coverage_reports/gcov
       - run:
           name: Run C++ Tests
           command: |
             source ${INIT_ENV}
-            export ROS_PARALLEL_JOBS='-j3 -l3' # Try to reduce memory consumption on build
+            source ${ROS_2_ENV}
             bash make_with_coverage.bash -t -e /opt/carma/ -o ./coverage_reports/gcov
       # Run SonarCloud analysis
       # PR Branchs and number extracted from Circle variables and github api
@@ -96,4 +95,3 @@ jobs:
             cd src/CARMANovateloem7driver
             git fetch --force origin ${TARGET_BRANCH}:${TARGET_BRANCH}
             sonar-scanner -Dproject.settings=.sonarqube/sonar-scanner.properties -Dsonar.login=${SONAR_SCANNER_TOKEN} -Dsonar.pullrequest.base=${TARGET_BRANCH} -Dsonar.pullrequest.branch=${CIRCLE_BRANCH} -Dsonar.pullrequest.key=${PR_NUM}
-
