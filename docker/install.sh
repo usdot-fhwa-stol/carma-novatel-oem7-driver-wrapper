@@ -22,6 +22,8 @@ source /home/carma/catkin/setup.bash
 sudo apt-get update
 rosdep update
 rosdep install --from-paths src --ignore-src -r -y
+sudo apt-get install ros-foxy-nmea-msgs
+sudo apt-get install ros-foxy-gps-tools
 # Build 
 #colcon build --packages-up-to novatel_oem7_driver carma_novatel_driver_wrapper
 colcon build --packages-up-to novatel_oem7_driver
