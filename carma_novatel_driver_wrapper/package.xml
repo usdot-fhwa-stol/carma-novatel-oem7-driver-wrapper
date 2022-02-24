@@ -37,6 +37,7 @@
   <depend>novatel_oem7_msgs</depend>
   <depend>novatel_oem7_driver</depend>
   <depend>uncertainty_tools</depend>
+  <depend>rclcpp_components</depend>
 
   <test_depend>ament_cmake_gtest</test_depend>
   
