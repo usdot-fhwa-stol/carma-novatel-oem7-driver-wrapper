@@ -16,8 +16,8 @@
 
 cd ~/
 # Source Environment variables
-source /home/carma/catkin/setup.bash
 source /opt/ros/foxy/setup.bash
+source /home/carma/catkin/setup.bash
 # Install dependencies
 sudo apt-get update
 rosdep update
