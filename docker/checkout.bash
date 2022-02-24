@@ -35,7 +35,7 @@ while [[ $# -gt 0 ]]; do
       esac
 done
 
-cd ~/src/carma_novatel_driver_wrapper
+cd ~/src
 ####Add dependencies#######
 
 if [[ "$BRANCH" = "develop" ]]; then
