@@ -48,3 +48,7 @@ sudo git clone https://github.com/novatel/novatel_oem7_driver.git ${dir}/src/nov
 # Checkout verified commit
 cd ${dir}/src/novatel_oem7_driver
 sudo git checkout 3055e220bb9715b59c3ef53ab0aba05a495d9d5
+
+sudo apt-get update
+sudo apt-get install ros-foxy-nmea-msgs -y
+sudo apt-get install ros-foxy-gps-tools -y
