@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#  Copyright (C) 2021 LEIDOS.
+#  Copyright (C) 2022 LEIDOS.
 # 
 #  Licensed under the Apache License, Version 2.0 (the "License"); you may not
 #  use this file except in compliance with the License. You may obtain a copy of
@@ -24,7 +24,7 @@ while [[ $# -gt 0 ]]; do
       arg="$1"
       case $arg in
             -d|--develop)
-                  BRANCH=foxy/develop
+                  BRANCH=develop
                   shift
             ;;
             -r|--root)
@@ -35,19 +35,20 @@ while [[ $# -gt 0 ]]; do
       esac
 done
 
-cd ~/src
-####Add dependencies#######
-
-if [[ "$BRANCH" = "foxy/develop" ]]; then
+if [[ "$BRANCH" = "develop" ]]; then
       sudo git clone https://github.com/usdot-fhwa-stol/carma-msgs.git ${dir}/src/CARMAMsgs --branch $BRANCH
-      sudo git clone https://github.com/usdot-fhwa-stol/carma-utils.git --branch $BRANCH
+      sudo git clone https://github.com/usdot-fhwa-stol/carma-utils.git ${dir}/src/CARMAUtils --branch $BRANCH
 else
-      sudo git clone https://github.com/usdot-fhwa-stol/carma-msgs.git ${dir}/src/CARMAMsgs --branch foxy/develop
-      sudo git clone https://github.com/usdot-fhwa-stol/carma-utils.git --branch foxy/develop
+      sudo git clone https://github.com/usdot-fhwa-stol/carma-msgs.git ${dir}/src/CARMAMsgs --branch develop
+      sudo git clone https://github.com/usdot-fhwa-stol/carma-utils.git ${dir}/src/CARMAUtils --branch develop
 fi
 
 # novatel driver 
-sudo git clone https://github.com/novatel/novatel_oem7_driver.git --branch ros2-dev 
+sudo git clone https://github.com/novatel/novatel_oem7_driver.git ${dir}/src/novatel_oem7_driver --branch ros2-dev 
 # Checkout verified commit
-cd novatel_oem7_driver
-sudo git checkout 3055e220bb9715b59c3ef53ab0aba05a495d9d5c
+cd ${dir}/src/novatel_oem7_driver
+sudo git checkout 3055e220bb9715b59c3ef53ab0aba05a495d9d5
+
+sudo apt-get update
+sudo apt-get install ros-foxy-nmea-msgs -y
+sudo apt-get install ros-foxy-gps-tools -y
