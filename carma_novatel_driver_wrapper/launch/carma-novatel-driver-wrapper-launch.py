@@ -51,7 +51,7 @@ def generate_launch_description():
         description = "Path to folder containing vehicle calibration directories"
     )
 
-    novatel_params_override_env = SetEnvironmentVariable('NOVATEL_OEM7_DRIVER_PARAM_OVERRIDES_PATH', [vehicle_calibration_dir, "novatel_oem7_driver", "parameter_overrides.yaml"])
+    novatel_params_override_env = SetEnvironmentVariable('NOVATEL_OEM7_DRIVER_PARAM_OVERRIDES_PATH', [vehicle_calibration_dir, "/novatel_oem7_driver", "/parameter_overrides.yaml"])
 
     # Define novatel driver node
     novatel_driver_pkg = get_package_share_directory('novatel_oem7_driver')
