@@ -28,6 +28,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.descriptions import ComposableNode
 from launch.actions import SetEnvironmentVariable
+from carma_ros2_utils.launch.get_current_namespace import GetCurrentNamespace
 
 import os
 
@@ -68,7 +69,7 @@ def generate_launch_description():
     novatel_wrapper_container = ComposableNodeContainer(
         package = 'carma_ros2_utils',
         name ='carma_novatel_driver_wrapper_container',
-        namespace = '/',
+        namespace = GetCurrentNamespace(),
         executable = 'carma_component_container_mt',
         composable_node_descriptions=[
 
