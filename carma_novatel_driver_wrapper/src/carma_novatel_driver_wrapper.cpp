@@ -29,8 +29,8 @@ namespace carma_novatel_driver_wrapper
             : CarmaLifecycleNode(options)
     {
         config_ = CarmaNovatelDriverWrapperConfig();
-        config_.imu_timeout = this->declare_parameter<double>("imu_timout", config_.imu_timeout);
-        config_.gnss_timeout = this->declare_parameter<double>("gnss_timout", config_.gnss_timeout);
+        config_.imu_timeout = this->declare_parameter<double>("imu_timeout", config_.imu_timeout);
+        config_.gnss_timeout = this->declare_parameter<double>("gnss_timeout", config_.gnss_timeout);
         config_.timer_callback = this->declare_parameter<int>("timer_callback", config_.timer_callback);
     }
     
@@ -94,8 +94,8 @@ namespace carma_novatel_driver_wrapper
         config_ = CarmaNovatelDriverWrapperConfig();
 
         //Load Parameters
-        this->get_parameter<double>("imu_timout", config_.imu_timeout);
-        this->get_parameter<double>("gnss_timout", config_.gnss_timeout);
+        this->get_parameter<double>("imu_timeout", config_.imu_timeout);
+        this->get_parameter<double>("gnss_timeout", config_.gnss_timeout);
         this->get_parameter<int>("timer_callback", config_.timer_callback);
 
         RCLCPP_INFO_STREAM(this->get_logger(), "Loaded config: " << config_);

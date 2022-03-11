@@ -27,8 +27,8 @@ namespace carma_novatel_driver_wrapper
 
     struct CarmaNovatelDriverWrapperConfig
     {
-        double imu_timeout = 1000.0;
-        double gnss_timeout = 1000.0;
+        double imu_timeout = 0.25;
+        double gnss_timeout = 0.25;
         int timer_callback = 500;
 
         // Stream operator for this config
