@@ -23,12 +23,14 @@ from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
 
 from launch.actions import IncludeLaunchDescription
+from launch.actions import GroupAction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.descriptions import ComposableNode
 from launch.actions import SetEnvironmentVariable
 from carma_ros2_utils.launch.get_current_namespace import GetCurrentNamespace
+from launch_ros.actions import set_remap
 
 import os
 
@@ -56,10 +58,18 @@ def generate_launch_description():
 
     # Define novatel driver node
     novatel_driver_pkg = get_package_share_directory('novatel_oem7_driver')
-    novatel_driver_node = IncludeLaunchDescription(
-                PythonLaunchDescriptionSource(['/', novatel_driver_pkg, '/launch','/oem7_net.launch.py']),
-                launch_arguments={'oem7_ip_addr': ip_addr, 'oem7_port' : port, 'oem7_if': 'Oem7ReceiverTcp'}.items(),
+
+    driver_group = GroupAction(
+        actions = [
+            set_remap.SetRemap('/hardware_interface/novatel/oem7/imu/data_raw', '/hardware_interface/imu_raw'),
+
+            IncludeLaunchDescription(
+                        PythonLaunchDescriptionSource(['/', novatel_driver_pkg, '/launch','/oem7_net.launch.py']),
+                        launch_arguments={'oem7_ip_addr': ip_addr, 'oem7_port' : port, 'oem7_if': 'Oem7ReceiverTcp'}.items(),
+            )
+        ]
     )
+
     
 
     # Add novatel wrapper to carma container
@@ -95,6 +105,6 @@ def generate_launch_description():
             declare_ip_addr,
             declare_port, 
             novatel_wrapper_container,
-            novatel_driver_node
+            driver_group
         ]
     )
