@@ -15,6 +15,12 @@
 FROM usdotfhwastoldev/carma-base:develop as base_image
 
 FROM base_image as source_code
+
+ARG ROS1_PACKAGES=""
+ENV ROS1_PACKAGES=${ROS1_PACKAGES}
+ARG ROS2_PACKAGES=""
+ENV ROS2_PACKAGES=${ROS2_PACKAGES}
+
 # Get source code
 RUN mkdir ~/src
 COPY --chown=carma . /home/carma/src/
