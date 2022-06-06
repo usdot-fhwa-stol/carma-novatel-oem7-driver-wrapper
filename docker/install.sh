@@ -16,11 +16,24 @@
 
 cd ~/
 # Source Environment variables
-source /opt/ros/foxy/setup.bash
-source /home/carma/catkin/setup.bash
-# Install dependencies
-sudo apt-get update
-rosdep update
-rosdep install --from-paths src --ignore-src -r -y
+# Source ros2
+if [[ ! -z "$ROS2_PACKAGES" ]]; then
+    echo "Sourcing previous build for incremental build start point..."
+    source /opt/carma/install/setup.bash
+else
+    echo "Sourcing base image for full build..."
+    source /opt/ros/foxy/setup.bash
+    source /home/carma/catkin/setup.bash
+fi
+
+
 # Build 
-colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
+if [[ ! -z "$ROS2_PACKAGES" ]]; then
+    colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-above $ROS2_PACKAGES
+else
+    # Install dependencies
+    sudo apt-get update
+    rosdep update
+    rosdep install --from-paths src --ignore-src -r -y
+    colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
+fi
