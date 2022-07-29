@@ -12,15 +12,23 @@
 #  License for the specific language governing permissions and limitations under
 #  the License.
 
-FROM usdotfhwastol/carma-base:carma-system-4.1.0 as base_image
+FROM usdotfhwastol/carma-base:carma-system-4.2.0 as base_image
 
 FROM base_image as source_code
+
+
 # Get source code
 RUN mkdir ~/src
 COPY --chown=carma . /home/carma/src/
 RUN ~/src/docker/checkout.bash
 
 FROM base_image as install
+
+ARG ROS1_PACKAGES=""
+ENV ROS1_PACKAGES=${ROS1_PACKAGES}
+ARG ROS2_PACKAGES=""
+ENV ROS2_PACKAGES=${ROS2_PACKAGES}
+
 RUN mkdir ~/src
 COPY --from=source_code --chown=carma /home/carma/src /home/carma/src
 
