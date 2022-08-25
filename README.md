@@ -1,3 +1,8 @@
+| CicleCI Build Status | Sonar Code Quality | DockerHub Release | DockerHub Release Candidate | DockerHub Develop |
+|------|-----|-----|-----|------|
+[![CircleCI](https://img.shields.io/circleci/build/gh/usdot-fhwa-stol/carma-novatel-oem7-driver-wrapper/develop?label=CircleCI)](https://app.circleci.com/pipelines/github/usdot-fhwa-stol/carma-novatel-oem7-driver-wrapper?branch=develop) | [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=usdot-fhwa-stol_carma-novatel-oem7-driver-wrapper&metric=alert_status)](https://sonarcloud.io/dashboard?id=usdot-fhwa-stol_carma-novatel-oem7-driver-wrapper) | [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/usdotfhwastol/carma-novatel-oem7-driver-wrapper?label=carma-novatel-oem7-driver-wrapper)](https://hub.docker.com/repository/docker/usdotfhwastol/carma-novatel-oem7-driver-wrapper) | [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/usdotfhwastolcandidate/carma-novatel-oem7-driver-wrapper?label=carma-novatel-oem7-driver-wrapper)](https://hub.docker.com/repository/docker/usdotfhwastolcandidate/carma-novatel-oem7-driver-wrapper) | [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/usdotfhwastoldev/carma-novatel-oem7-driver-wrapper?label=carma-novatel-oem7-driver-wrapper)](https://hub.docker.com/repository/docker/usdotfhwastoldev/carma-novatel-oem7-driver-wrapper)
+
+
 # carma-novatel-oem7-driver-wrapper
 
 Wrapper repo for NovAtel OEM7 ROS Driver (Implementation for ros2)
