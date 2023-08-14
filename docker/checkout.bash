@@ -43,6 +43,7 @@ else
       sudo git clone https://github.com/usdot-fhwa-stol/carma-utils.git ${dir}/src/CARMAUtils --branch develop
 fi
 
+
 # novatel driver 
 sudo git clone https://github.com/novatel/novatel_oem7_driver.git ${dir}/src/novatel_oem7_driver -b ros2-dev
 # Checkout verified commit
