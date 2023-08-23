@@ -33,8 +33,6 @@ if [[ ! -z "$ROS2_PACKAGES" ]]; then
 else
     # Install dependencies
     sudo apt-get update
-    sudo apt-get install ros-foxy-nmea-msgs -y
-    sudo apt-get install ros-foxy-gps-tools -y
     rosdep update
     rosdep install --from-paths src --ignore-src -r -y
     colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
