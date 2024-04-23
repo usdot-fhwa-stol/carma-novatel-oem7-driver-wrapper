@@ -20,11 +20,13 @@
 set -exo pipefail
 
 dir=~
+BRANCH=develop  # The script will use this unless the -b flag updates it
 while [[ $# -gt 0 ]]; do
       arg="$1"
       case $arg in
-            -d|--develop)
-                  BRANCH=develop
+            -b|--branch)
+                  BRANCH=$2
+                  shift
                   shift
             ;;
             -r|--root)
@@ -35,13 +37,9 @@ while [[ $# -gt 0 ]]; do
       esac
 done
 
-if [[ "$BRANCH" = "develop" ]]; then
-      sudo git clone https://github.com/usdot-fhwa-stol/carma-msgs.git ${dir}/src/CARMAMsgs --branch $BRANCH
-      sudo git clone https://github.com/usdot-fhwa-stol/carma-utils.git ${dir}/src/CARMAUtils --branch $BRANCH
-else
-      sudo git clone https://github.com/usdot-fhwa-stol/carma-msgs.git ${dir}/src/CARMAMsgs --branch carma-system-4.5.0
-      sudo git clone https://github.com/usdot-fhwa-stol/carma-utils.git ${dir}/src/CARMAUtils --branch carma-system-4.5.0
-fi
+sudo git clone https://github.com/usdot-fhwa-stol/carma-msgs.git ${dir}/src/CARMAMsgs --branch $BRANCH
+sudo git clone https://github.com/usdot-fhwa-stol/carma-utils.git ${dir}/src/CARMAUtils --branch $BRANCH
+
 
 # novatel driver 
 sudo git clone https://github.com/novatel/novatel_oem7_driver.git ${dir}/src/novatel_oem7_driver -b ros2-dev
