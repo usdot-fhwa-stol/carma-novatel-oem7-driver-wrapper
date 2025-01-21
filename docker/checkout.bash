@@ -1,13 +1,13 @@
 #!/bin/bash
 
 #  Copyright (C) 2022 LEIDOS.
-# 
+#
 #  Licensed under the Apache License, Version 2.0 (the "License"); you may not
 #  use this file except in compliance with the License. You may obtain a copy of
 #  the License at
-# 
+#
 #  http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 #  Unless required by applicable law or agreed to in writing, software
 #  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
 #  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -41,8 +41,8 @@ sudo git clone https://github.com/usdot-fhwa-stol/carma-msgs.git ${dir}/src/CARM
 sudo git clone https://github.com/usdot-fhwa-stol/carma-utils.git ${dir}/src/CARMAUtils --branch $BRANCH
 
 
-# novatel driver 
-sudo git clone https://github.com/novatel/novatel_oem7_driver.git ${dir}/src/novatel_oem7_driver -b ros2-dev
+# novatel driver
+sudo git clone https://github.com/novatel/novatel_oem7_driver.git ${dir}/src/novatel_oem7_driver -b humble
 # Checkout verified commit
-cd ${dir}/src/novatel_oem7_driver
-sudo git checkout 3055e220bb9715b59c3ef53ab0aba05a495d9d5
+# cd ${dir}/src/novatel_oem7_driver
+# sudo git checkout 3193aa109eb71397bf18dd3bb114858aff2375e1
