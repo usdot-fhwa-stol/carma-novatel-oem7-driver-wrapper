@@ -44,5 +44,5 @@ sudo git clone https://github.com/usdot-fhwa-stol/carma-utils.git ${dir}/src/CAR
 # novatel driver
 sudo git clone https://github.com/novatel/novatel_oem7_driver.git ${dir}/src/novatel_oem7_driver -b humble
 # Checkout verified commit
-# cd ${dir}/src/novatel_oem7_driver
-# sudo git checkout 3193aa109eb71397bf18dd3bb114858aff2375e1
+cd ${dir}/src/novatel_oem7_driver
+sudo git checkout 28f4c01f5dd193743f4f4051a17fef6281f3e5d4
