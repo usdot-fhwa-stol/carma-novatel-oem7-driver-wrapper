@@ -35,7 +35,7 @@ from launch_ros.actions import set_remap
 import os
 
 def generate_launch_description():
-    
+
     # Declare arguments
     log_level = LaunchConfiguration('log_level')
     declare_log_level_arg = DeclareLaunchArgument(
@@ -49,7 +49,7 @@ def generate_launch_description():
 
     vehicle_calibration_dir = LaunchConfiguration('vehicle_calibration_dir')
     declare_vehicle_calibration_dir_arg = DeclareLaunchArgument(
-        name = 'vehicle_calibration_dir', 
+        name = 'vehicle_calibration_dir',
         default_value = "/opt/carma/vehicle/calibration",
         description = "Path to folder containing vehicle calibration directories"
     )
@@ -65,17 +65,17 @@ def generate_launch_description():
 
             IncludeLaunchDescription(
                         PythonLaunchDescriptionSource(['/', novatel_driver_pkg, '/launch','/oem7_net.launch.py']),
-                        launch_arguments={'oem7_ip_addr': ip_addr, 'oem7_port' : port, 'oem7_if': 'Oem7ReceiverTcp'}.items(),
+                        launch_arguments={'oem7_ip_addr': ip_addr, 'oem7_port' : port, 'oem7_if': 'Oem7ReceiverUdp'}.items(),
             )
         ]
     )
 
-    
+
 
     # Add novatel wrapper to carma container
     param_file_path = os.path.join(
         get_package_share_directory('carma_novatel_driver_wrapper'),'config/parameters.yaml')
-    
+
     novatel_wrapper_container = ComposableNodeContainer(
         package = 'carma_ros2_utils',
         name ='carma_novatel_driver_wrapper_container',
@@ -103,7 +103,7 @@ def generate_launch_description():
             declare_vehicle_calibration_dir_arg,
             novatel_params_override_env,
             declare_ip_addr,
-            declare_port, 
+            declare_port,
             novatel_wrapper_container,
             driver_group
         ]
