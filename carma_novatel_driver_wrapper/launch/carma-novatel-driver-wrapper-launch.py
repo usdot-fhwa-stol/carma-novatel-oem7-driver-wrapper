@@ -54,6 +54,15 @@ def generate_launch_description():
         description = "Path to folder containing vehicle calibration directories"
     )
 
+    # Declare the global_params_override_file launch argument
+    # Parameters in this file will override any parameters loaded in their respective packages
+    global_params_override_file = LaunchConfiguration('global_params_override_file')
+    declare_global_params_override_file_arg = DeclareLaunchArgument(
+        name = 'global_params_override_file',
+        default_value = ["/opt/carma/vehicle/GlobalParamsOverride.yaml"],
+        description = "Path to global file containing the parameters overwrite"
+    )
+
     novatel_params_override_env = SetEnvironmentVariable('NOVATEL_OEM7_DRIVER_PARAM_OVERRIDES_PATH', [vehicle_calibration_dir, "/novatel_oem7_driver", "/parameter_overrides.yaml"])
 
     # Define novatel driver node
@@ -64,13 +73,16 @@ def generate_launch_description():
             set_remap.SetRemap('/hardware_interface/novatel/oem7/imu/data_raw', '/hardware_interface/imu_raw'),
 
             IncludeLaunchDescription(
-                        PythonLaunchDescriptionSource(['/', novatel_driver_pkg, '/launch','/oem7_net.launch.py']),
-                        launch_arguments={'oem7_ip_addr': ip_addr, 'oem7_port' : port, 'oem7_if': 'Oem7ReceiverUdp'}.items(),
+                PythonLaunchDescriptionSource(['/', novatel_driver_pkg, '/launch','/oem7_net.launch.py']),
+                launch_arguments={
+                    'oem7_ip_addr': ip_addr,
+                    'oem7_port' : port,
+                    'oem7_if': 'Oem7ReceiverUdp',
+                    # parameters are overriden by env variable above in vehicle_calibration_dir
+                }.items(),
             )
         ]
     )
-
-
 
     # Add novatel wrapper to carma container
     param_file_path = os.path.join(
@@ -92,7 +104,7 @@ def generate_launch_description():
                     {'use_intra_process_comms': True},
                     {'--log-level' : log_level}
                 ],
-                parameters=[ param_file_path ]
+                parameters=[ param_file_path, global_params_override_file ]
             )
         ]
     )
@@ -101,6 +113,7 @@ def generate_launch_description():
         [
             declare_log_level_arg,
             declare_vehicle_calibration_dir_arg,
+            declare_global_params_override_file_arg,
             novatel_params_override_env,
             declare_ip_addr,
             declare_port,
